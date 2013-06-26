@@ -1,4 +1,8 @@
-wetkit-metatag
-==============
+WetKit Metatags
+===============
+Support for metatags that can assist in SEO for the website.
 
-Metatag Configuration for Drupal WEM.
+Key Features
+* Implements standard metatags according to WET specifications
+* Custom bilingual tokens
+* Custom bilingual variables
