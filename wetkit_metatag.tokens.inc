@@ -89,6 +89,8 @@ function wetkit_metatag_token_info() {
  *   strings from the original text.
  */
 function wetkit_metatag_tokens($type, $tokens, array $data = array(), array $options = array()) {
+  global $language;
+
   $url_options = array('absolute' => TRUE);
   if (isset($options['language'])) {
     $url_options['language'] = $options['language'];
@@ -108,7 +110,6 @@ function wetkit_metatag_tokens($type, $tokens, array $data = array(), array $opt
     foreach ($tokens as $name => $original) {
       switch ($name) {
         case 'bilingual_default_value':
-          global $language;
           $value = '';
           if ($language->language == 'fr') {
             $value = 'null';
@@ -120,7 +121,6 @@ function wetkit_metatag_tokens($type, $tokens, array $data = array(), array $opt
           break;
 
         case 'creator_default_value':
-          global $language;
           $value = '';
 
           // If i18n variable exists then give it precedence.
@@ -137,7 +137,6 @@ function wetkit_metatag_tokens($type, $tokens, array $data = array(), array $opt
           break;
 
         case 'language_default_value':
-          global $language;
           $value = '';
           if ($language->language == 'fr') {
             $value = 'fra';
@@ -158,7 +157,6 @@ function wetkit_metatag_tokens($type, $tokens, array $data = array(), array $opt
     foreach ($tokens as $name => $original) {
       switch ($name) {
         case 'bilingual_prefix':
-          global $language;
           if ($language->language == 'fr') {
             $value = 'fra';
           }
@@ -169,7 +167,6 @@ function wetkit_metatag_tokens($type, $tokens, array $data = array(), array $opt
           break;
 
         case 'bilingual_date_issued':
-          global $language;
           if ($language->language == 'fr') {
             $value = format_date(time(), 'custom', 'Y-m-d');
           }
@@ -180,7 +177,6 @@ function wetkit_metatag_tokens($type, $tokens, array $data = array(), array $opt
           break;
 
         case 'bilingual_date_published':
-          global $language;
           if ($language->language == 'fr') {
             $value = format_date(time(), 'custom', 'Y-m-d');
           }
@@ -191,7 +187,6 @@ function wetkit_metatag_tokens($type, $tokens, array $data = array(), array $opt
           break;
 
         case 'improved_creator':
-          global $language;
           $value = '';
 
           // If i18n variable exists then give it precedence.

@@ -8,7 +8,6 @@
  * Implements hook_metatag_config_default_alter().
  */
 function wetkit_metatag_metatag_config_default_alter(array &$configs) {
-  global $language;
   foreach ($configs as &$config) {
     switch ($config->instance) {
       case 'global':
