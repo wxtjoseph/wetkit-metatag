@@ -9,5 +9,5 @@ projects[metatag][version] = 1.x-dev
 projects[metatag][subdir] = contrib
 projects[metatag][type] = module
 projects[metatag][download][type] = git
-projects[metatag][download][revision] = 6eb7fe2
+projects[metatag][download][revision] = fa86b96
 projects[metatag][download][branch] = 7.x-1.x

@@ -17,3 +17,12 @@ function wetkit_metatag_uninstall() {
     }
   }
 }
+
+/**
+ * Implements hook_update_n().
+ */
+function wetkit_metatag_update_7101() {
+  if (!module_exists('metatag_panels')) {
+    module_enable(array('metatag_panels'));
+  }
+}
