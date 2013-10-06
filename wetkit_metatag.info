@@ -16,4 +16,5 @@ features[metatag][] = node
 features[metatag][] = taxonomy_term
 features[metatag][] = user
 features[variable][] = wetkit_metatag_creator
+features[variable][] = wetkit_metatag_optional_settings
 features[variable][] = wetkit_metatag_subject_scheme

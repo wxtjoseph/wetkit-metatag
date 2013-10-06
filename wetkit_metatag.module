@@ -6,6 +6,21 @@
 
 include_once 'wetkit_metatag.features.inc';
 
+/*
+ * Implements hook_menu().
+ */
+function wetkit_metatag_menu() {
+  $items['admin/config/search/metatags/optional'] = array(
+    'title' => 'Enable/disable meta tags',
+    'description' => 'Configure meta tag optional.',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('wetkit_metatag_optional_config_form'),
+    'access arguments' => array('administer meta tags'),
+    'type' => MENU_LOCAL_TASK,
+  );
+  return $items;
+}
+
 /**
  * Implements hook_apps_app_info().
  */
@@ -169,4 +184,77 @@ function wetkit_metatag_form_alter(&$form, &$form_state, $form_id) {
     unset($form['metatags']['abstract']);
     unset($form['metatags']['keywords']);
   }
+}
+
+/*
+ * Form definition for enabling and disabling meta tags.
+ */
+function wetkit_metatag_optional_config_form($form, $form_state) {
+  $form = array('#tree' => TRUE);
+  // Show a title.
+  $form['info'] = array(
+    '#markup' => t('Choose which entities and bundles to enable meta tags for:'),
+    '#prefix' => '<h3>',
+    '#suffix' => '</h3>',
+  );
+
+  $entity_infos = entity_get_info();
+  // Add in our own settings.
+  $entity_infos = drupal_array_merge_deep($entity_infos, variable_get('wetkit_metatag_optional_settings', array()));
+
+  // Loop through entities and bundles.
+  foreach ($entity_infos as $entity_key => $entity_info) {
+    if (!empty($entity_info['bundles'])) {
+      $options = array();
+      $defaults = array();
+      foreach ($entity_info['bundles'] as $bundle_key => $bundle_info) {
+        if (!isset($entity_info['metatags']) || $entity_info['metatags']) {
+          if (!isset($bundle_info['metatags']) || $bundle_info['metatags']) {
+            $defaults[] = $bundle_key;
+          }
+        }
+        $options[$bundle_key] = $bundle_info['label'];
+      }
+      // Add a checkboxes group for the bundles in this entity.
+      $form['metatags'][$entity_key] = array(
+        '#type' => 'checkboxes',
+        '#options' => $options,
+        '#default_value' => $defaults,
+        '#title' => check_plain($entity_info['label']),
+      );
+    }
+  }
+
+  // Add submit button.
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => t('Save options'),
+  );
+
+  return $form;
+}
+
+/*
+ * Handle form submission.
+ */
+function wetkit_metatag_optional_config_form_submit($form, $form_state) {
+  // Convert user input to mergable array.
+  $config = array();
+  foreach ($form_state['values']['metatags'] as $entity => $bundles) {
+    foreach ($bundles as $bundle => $value) {
+      $config[$entity]['bundles'][$bundle]['metatags'] = !empty($value);
+    }
+  }
+  variable_set('wetkit_metatag_optional_settings', $config);
+  // Clear the entity info cache to ensure our alter hook gets called.
+  entity_info_cache_clear();
+  drupal_set_message(t('Meta tags options saved.'), 'status');
+}
+
+/*
+ * Implements hook_entity_info_alter().
+ */
+function wetkit_metatag_entity_info_alter(&$entity_info) {
+  // Merge our setting with the entity info to override any metatags.
+  $entity_info = drupal_array_merge_deep($entity_info, variable_get('wetkit_metatag_optional_settings', array()));
 }
