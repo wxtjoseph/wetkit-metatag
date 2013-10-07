@@ -70,19 +70,6 @@ function wetkit_metatag_strongarm() {
         ),
       ),
     ),
-    'i18n_translation' => array(
-      'bundles' => array(
-        'menu_link' => array(
-          'metatags' => TRUE,
-        ),
-        'path' => array(
-          'metatags' => TRUE,
-        ),
-        'taxonomy_term' => array(
-          'metatags' => TRUE,
-        ),
-      ),
-    ),
     'file' => array(
       'bundles' => array(
         'image' => array(
@@ -99,67 +86,6 @@ function wetkit_metatag_strongarm() {
         ),
         'wetkit_video' => array(
           'metatags' => FALSE,
-        ),
-      ),
-    ),
-    'taxonomy_vocabulary' => array(
-      'bundles' => array(
-        'taxonomy_vocabulary' => array(
-          'metatags' => TRUE,
-        ),
-      ),
-    ),
-    'user' => array(
-      'bundles' => array(
-        'user' => array(
-          'metatags' => TRUE,
-        ),
-      ),
-    ),
-    'wysiwyg_profile' => array(
-      'bundles' => array(
-        'wysiwyg_profile' => array(
-          'metatags' => TRUE,
-        ),
-      ),
-    ),
-    'menu_link' => array(
-      'bundles' => array(
-        'devel' => array(
-          'metatags' => TRUE,
-        ),
-        'menu-wet-footer' => array(
-          'metatags' => TRUE,
-        ),
-        'menu-wet-header' => array(
-          'metatags' => TRUE,
-        ),
-        'management' => array(
-          'metatags' => TRUE,
-        ),
-        'main-menu' => array(
-          'metatags' => TRUE,
-        ),
-        'megamenu-focus' => array(
-          'metatags' => TRUE,
-        ),
-        'megamenu' => array(
-          'metatags' => TRUE,
-        ),
-        'menu-wet-mid-footer' => array(
-          'metatags' => TRUE,
-        ),
-        'navigation' => array(
-          'metatags' => TRUE,
-        ),
-        'sidebar' => array(
-          'metatags' => TRUE,
-        ),
-        'menu-wet-terms' => array(
-          'metatags' => TRUE,
-        ),
-        'user-menu' => array(
-          'metatags' => TRUE,
         ),
       ),
     ),
