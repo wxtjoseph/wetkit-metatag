@@ -8,6 +8,7 @@ dependencies[] = i18n_variable
 dependencies[] = metatag
 dependencies[] = metatag_panels
 dependencies[] = strongarm
+dependencies[] = wetkit_bean
 features[ctools][] = strongarm:strongarm:1
 features[features_api][] = api:2
 features[metatag][] = global
