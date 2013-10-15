@@ -138,33 +138,20 @@ function wetkit_metatag_form_alter(&$form, &$form_state, $form_id) {
     // Ensure that the metatags form is present.
     if (!empty($form['metatags'])) {
       // Metatag defaults.
-      $form['metatags']['defaults']['#title'] = 'Defaults';
-      $form['metatags']['defaults']['#type'] = 'fieldset';
-      $form['metatags']['defaults']['#collapsible'] = TRUE;
-      $form['metatags']['defaults']['#collapsed'] = TRUE;
-      $form['metatags']['defaults']['title'] = $form['metatags']['title'];
-      $form['metatags']['defaults']['description'] = $form['metatags']['description'];
-      $form['metatags']['defaults']['keywords'] = $form['metatags']['keywords'];
-      $form['metatags']['defaults']['canonical'] = $form['metatags']['advanced']['canonical'];
-      $form['metatags']['defaults']['shortlink'] = $form['metatags']['advanced']['shortlink'];
-      $form['metatags']['defaults']['robots'] = $form['metatags']['advanced']['robots'];
-
-      // Metatag defaults descriptions.
-      $form['metatags']['defaults']['robots']['value']['#description'] = t('Information about this element can be found at: <a href="http://www.robotstxt.org/meta.html">www.robotstxt.org/meta.html</a>');
+      $form['metatags']['robots']['#title'] = 'Robots';
+      $form['metatags']['robots']['#type'] = 'fieldset';
+      $form['metatags']['robots']['#collapsible'] = TRUE;
+      $form['metatags']['robots']['#collapsed'] = TRUE;
+      $form['metatags']['robots']['#weight'] = 71;
+      $form['metatags']['robots']['robots'] = $form['metatags']['advanced']['robots'];
+      $form['metatags']['robots']['robots']['value']['#description'] = t('Information about this element can be found at: <a href="http://www.robotstxt.org/meta.html">www.robotstxt.org/meta.html</a>');
 
       // Unsets for metatags.
       unset($form['metatags']['#description']);
       unset($form['metatags']['abstract']);
       unset($form['metatags']['advanced']);
-      unset($form['metatags']['title']);
-      unset($form['metatags']['description']);
-      unset($form['metatags']['keywords']);
-      unset($form['metatags']['defaults']['title']['value']['#description']);
-      unset($form['metatags']['defaults']['description']['value']['#description']);
-      unset($form['metatags']['defaults']['keywords']['value']['#description']);
-      unset($form['metatags']['defaults']['canonical']['value']['#description']);
-      unset($form['metatags']['defaults']['robots']['value']['#options']['noodp']);
-      unset($form['metatags']['defaults']['robots']['value']['#options']['noydir']);
+      unset($form['metatags']['robots']['robots']['value']['#options']['noodp']);
+      unset($form['metatags']['robots']['robots']['value']['#options']['noydir']);
       unset($form['metatags']['dublin-core']['#description']);
       unset($form['metatags']['dublin-core']['dcterms.coverage']);
       unset($form['metatags']['dublin-core']['dcterms.date']);
