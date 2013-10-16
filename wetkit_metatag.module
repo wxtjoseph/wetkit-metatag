@@ -137,31 +137,9 @@ function wetkit_metatag_form_alter(&$form, &$form_state, $form_id) {
   if (!empty($form['#node_edit_form'])) {
     // Ensure that the metatags form is present.
     if (!empty($form['metatags'])) {
-      // Metatag defaults.
-      $form['metatags']['robots']['#title'] = 'Robots';
-      $form['metatags']['robots']['#type'] = 'fieldset';
-      $form['metatags']['robots']['#collapsible'] = TRUE;
-      $form['metatags']['robots']['#collapsed'] = TRUE;
-      $form['metatags']['robots']['#weight'] = 71;
-      $form['metatags']['robots']['robots'] = $form['metatags']['advanced']['robots'];
-      $form['metatags']['robots']['robots']['value']['#description'] = t('Information about this element can be found at: <a href="http://www.robotstxt.org/meta.html">www.robotstxt.org/meta.html</a>');
-
-      // Unsets for metatags.
       unset($form['metatags']['#description']);
-      unset($form['metatags']['abstract']);
-      unset($form['metatags']['advanced']);
-      unset($form['metatags']['robots']['robots']['value']['#options']['noodp']);
-      unset($form['metatags']['robots']['robots']['value']['#options']['noydir']);
+      unset($form['metatags']['defaults']['#description']);
       unset($form['metatags']['dublin-core']['#description']);
-      unset($form['metatags']['dublin-core']['dcterms.coverage']);
-      unset($form['metatags']['dublin-core']['dcterms.date']);
-      unset($form['metatags']['dublin-core']['dcterms.format']);
-      unset($form['metatags']['dublin-core']['dcterms.publisher']);
-      unset($form['metatags']['dublin-core']['dcterms.contributor']);
-      unset($form['metatags']['dublin-core']['dcterms.relation']);
-      unset($form['metatags']['dublin-core']['dcterms.rights']);
-      unset($form['metatags']['dublin-core']['dcterms.source']);
-      unset($form['metatags']['dublin-core']['dcterms.type']);
     }
   }
 }

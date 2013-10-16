@@ -58,13 +58,24 @@ function wetkit_metatag_metatag_config_default_alter(array &$configs) {
  * Implements hook_metatag_info().
  */
 function wetkit_metatag_metatag_info() {
-  $info['groups']['dublin-core'] = array(
-    'label' => t('Dublin Core'),
-    'description' => t('The Dublin Core Metadata Element Set, aka "Dublin Core meta tags", are a set of internationally standardized metadata tags used to describe content to make identification and classification of content easier; the standards are controlled by the <a href="http://dublincore.org/">Dublin Core Metadata Initiative (DCMI)</a>.'),
+
+  // Native Groupings.
+  $info['groups']['defaults'] = array(
+    'label' => t('Defaults'),
+    'description' => t('Default grouping for meta tags.'),
     'form' => array(
-      '#weight' => 70,
+      '#weight' => 40,
     ),
   );
+  $info['groups']['dublin-core'] = array(
+    'label' => t('Dublin Core'),
+    'description' => t('Information about Dublin Core can be found at: <a href="http://dublincore.org/documents/dcmi-terms">dublincore.org/documents/dcmi-terms</a>.'),
+    'form' => array(
+      '#weight' => 50,
+    ),
+  );
+
+  // Native Tags.
   $info['tags']['dcterms.title'] = array(
     'label' => t('Dublin Core Title'),
     'description' => t('Information about this element can be found at: <a href="http://purl.org/dc/elements/1.1/title">purl.org/dc/elements/1.1/title</a>'),
@@ -103,34 +114,6 @@ function wetkit_metatag_metatag_info() {
       '#theme' => 'wetkit_metatag',
     ),
   );
-  $info['tags']['dcterms.publisher'] = array(
-    'label' => t('Dublin Core Publisher'),
-    'description' => t('Information about this element can be found at: <a href="http://purl.org/dc/elements/1.1/publisher">purl.org/dc/elements/1.1/publisher</a>'),
-    'group' => 'dublin-core',
-    'class' => 'DrupalTextMetaTag',
-    'element' => array(
-      '#theme' => 'wetkit_metatag',
-    ),
-  );
-  $info['tags']['dcterms.contributor'] = array(
-    'label' => t('Dublin Core Contributor'),
-    'description' => t('Information about this element can be found at: <a href="http://purl.org/dc/elements/1.1/contributor">purl.org/dc/elements/1.1/contributor</a>'),
-    'group' => 'dublin-core',
-    'class' => 'DrupalTextMetaTag',
-    'element' => array(
-      '#theme' => 'wetkit_metatag',
-    ),
-  );
-  $info['tags']['dcterms.date'] = array(
-    'label' => t('Dublin Core Date'),
-    'description' => t('Information about this element can be found at: <a href="http://purl.org/dc/elements/1.1/date">purl.org/dc/elements/1.1/date</a>'),
-    'class' => 'DrupalTextMetaTag',
-    'group' => 'dublin-core',
-    'element' => array(
-      '#theme' => 'wetkit_metatag',
-      '#schema' => 'W3CDTF',
-    ),
-  );
   $info['tags']['dcterms.issued'] = array(
     'label' => t('Dublin Core Issued Date'),
     'description' => t('Information about this element can be found at: <a href="http://purl.org/dc/elements/1.1/issued">purl.org/dc/elements/1.1/issued</a>'),
@@ -151,49 +134,6 @@ function wetkit_metatag_metatag_info() {
       '#schema' => 'W3CDTF',
     ),
   );
-  $info['tags']['dcterms.type'] = array(
-    'label' => t('Dublin Core Type'),
-    'description' => t('Information about this element can be found at: <a href="http://purl.org/dc/elements/1.1/type">purl.org/dc/elements/1.1/type</a>'),
-    'class' => 'DrupalTextMetaTag',
-    'group' => 'dublin-core',
-    'form' => array(
-      '#type' => 'select',
-      '#options' => _wetkit_metatag_dcmi_type_vocabulary_options(),
-      '#empty_option' => t('- None -'),
-    ),
-    'element' => array(
-      '#theme' => 'wetkit_metatag',
-      '#schema' => 'dcterms.dcmitype',
-    ),
-  );
-  $info['tags']['dcterms.format'] = array(
-    'label' => t('Dublin Core Format'),
-    'description' => t('Information about this element can be found at: <a href="http://purl.org/dc/elements/1.1/format">purl.org/dc/elements/1.1/format</a>'),
-    'class' => 'DrupalTextMetaTag',
-    'group' => 'dublin-core',
-    'element' => array(
-      '#theme' => 'wetkit_metatag',
-      '#schema' => 'dcterms.imt',
-    ),
-  );
-  $info['tags']['dcterms.identifier'] = array(
-    'label' => t('Dublin Core Identifier'),
-    'description' => t('Information about this element can be found at: <a href="http://purl.org/dc/elements/1.1/identifier">purl.org/dc/elements/1.1/identifier</a>'),
-    'class' => 'DrupalTextMetaTag',
-    'group' => 'dublin-core',
-    'element' => array(
-      '#theme' => 'wetkit_metatag',
-    ),
-  );
-  $info['tags']['dcterms.source'] = array(
-    'label' => t('Dublin Core Source'),
-    'description' => t('Information about this element can be found at: <a href="http://purl.org/dc/elements/1.1/source">purl.org/dc/elements/1.1/source</a>'),
-    'group' => 'dublin-core',
-    'class' => 'DrupalTextMetaTag',
-    'element' => array(
-      '#theme' => 'wetkit_metatag',
-    ),
-  );
   $info['tags']['dcterms.language'] = array(
     'label' => t('Dublin Core Language'),
     'description' => t('Information about this element can be found at: <a href="http://purl.org/dc/elements/1.1/language">purl.org/dc/elements/1.1/language</a>'),
@@ -204,54 +144,33 @@ function wetkit_metatag_metatag_info() {
       '#schema' => 'ISO639-2',
     ),
   );
-  $info['tags']['dcterms.relation'] = array(
-    'label' => t('Dublin Core Relation'),
-    'description' => t('Information about this element can be found at: <a href="http://purl.org/dc/elements/1.1/relation">purl.org/dc/elements/1.1/relation</a>'),
-    'group' => 'dublin-core',
-    'class' => 'DrupalTextMetaTag',
-    'element' => array(
-      '#theme' => 'wetkit_metatag',
-    ),
-  );
-  $info['tags']['dcterms.coverage'] = array(
-    'label' => t('Dublin Core Coverage'),
-    'description' => t('Information about this element can be found at: <a href="http://purl.org/dc/elements/1.1/coverage">purl.org/dc/elements/1.1/coverage</a>'),
-    'group' => 'dublin-core',
-    'class' => 'DrupalTextMetaTag',
-    'element' => array(
-      '#theme' => 'wetkit_metatag',
-    ),
-  );
-  $info['tags']['dcterms.rights'] = array(
-    'label' => t('Dublin Core Rights'),
-    'description' => t('Information about this element can be found at: <a href="http://purl.org/dc/elements/1.1/rights">purl.org/dc/elements/1.1/rights</a>'),
-    'group' => 'dublin-core',
-    'class' => 'DrupalTextMetaTag',
-    'element' => array(
-      '#theme' => 'wetkit_metatag',
-    ),
-  );
 
   return $info;
 }
 
 /**
- * Function that returns the DCMI type options.
+ * Implements hook_metatag_info_alter().
  */
-function _wetkit_metatag_dcmi_type_vocabulary_options() {
-  $options = array(
-    'Collection',
-    'Dataset',
-    'Event',
-    'Image',
-    'InteractiveResource',
-    'MovingImage',
-    'PhysicalObject',
-    'Service',
-    'Software',
-    'Sound',
-    'StillImage',
-    'Text',
-  );
-  return drupal_map_assoc($options);
+function wetkit_metatag_metatag_info_alter(&$info) {
+  // Cleaner groupings.
+  $info['tags']['description']['group'] = 'defaults';
+  $info['tags']['keywords']['group'] = 'defaults';
+  $info['tags']['robots']['group'] = 'defaults';
+  $info['tags']['title']['group'] = 'defaults';
+
+  // Remove tags we don't need to leverage.
+  unset($info['tags']['abstract']);
+  unset($info['tags']['author']);
+  unset($info['tags']['canonical']);
+  unset($info['tags']['copyright']);
+  unset($info['tags']['generator']);
+  unset($info['tags']['image_src']);
+  unset($info['tags']['news_keywords']);
+  unset($info['tags']['original-source']);
+  unset($info['tags']['publisher']);
+  unset($info['tags']['revisit-after']);
+  unset($info['tags']['robots']['form']['#options']['noodp']);
+  unset($info['tags']['robots']['form']['#options']['noydir']);
+  unset($info['tags']['shortlink']);
+  unset($info['tags']['standout']);
 }
