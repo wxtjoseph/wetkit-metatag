@@ -9,5 +9,6 @@ projects[metatag][version] = 1.x-dev
 projects[metatag][subdir] = contrib
 projects[metatag][type] = module
 projects[metatag][download][type] = git
-projects[metatag][download][revision] = fa86b96
+projects[metatag][download][revision] = 8a05eec
 projects[metatag][download][branch] = 7.x-1.x
+projects[metatag][patch][1572474] = http://drupal.org/files/metatag-n1572474-53.patch
