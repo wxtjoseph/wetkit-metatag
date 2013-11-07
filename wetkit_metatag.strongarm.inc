@@ -27,23 +27,11 @@ function wetkit_metatag_strongarm() {
         'wetkit_page' => array(
           'metatags' => TRUE,
         ),
-        'deploy_content_moderated' => array(
-          'metatags' => TRUE,
-        ),
-        'deploy_content_simple' => array(
-          'metatags' => TRUE,
-        ),
-        'wetkit_documentation' => array(
-          'metatags' => TRUE,
-        ),
       ),
     ),
     'taxonomy_term' => array(
       'bundles' => array(
         'wetkit_categories' => array(
-          'metatags' => TRUE,
-        ),
-        'tags' => array(
           'metatags' => TRUE,
         ),
       ),
