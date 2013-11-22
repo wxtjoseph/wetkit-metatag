@@ -89,7 +89,6 @@ function wetkit_metatag_token_info() {
  *   strings from the original text.
  */
 function wetkit_metatag_tokens($type, $tokens, array $data = array(), array $options = array()) {
-  global $language;
 
   $url_options = array('absolute' => TRUE);
   if (isset($options['language'])) {
@@ -99,9 +98,9 @@ function wetkit_metatag_tokens($type, $tokens, array $data = array(), array $opt
   else {
     $language_code = NULL;
   }
+  $sanitize = !empty($options['sanitize']);
 
   $replacements = array();
-  $sanitize = !empty($options['sanitize']);
 
   // Current page tokens.
   if ($type == 'current-page') {
@@ -111,7 +110,7 @@ function wetkit_metatag_tokens($type, $tokens, array $data = array(), array $opt
       switch ($name) {
         case 'bilingual_default_value':
           $value = '';
-          if ($language->language == 'fr') {
+          if ($language_code == 'fr') {
             $value = 'null';
           }
           else {
@@ -122,23 +121,16 @@ function wetkit_metatag_tokens($type, $tokens, array $data = array(), array $opt
 
         case 'creator_default_value':
           $value = '';
-
           // If i18n variable exists then give it precedence.
           if (function_exists('i18n_variable_get')) {
-            $value = i18n_variable_get('wetkit_metatag_creator', $language->language);
+            $value = i18n_variable_get('wetkit_metatag_creator', $language_code);
           }
-
-          // If there is no i18n variable present for creator then node author.
-          if ($value == '') {
-            $value = 'Web Experience Toolkit';
-          }
-
           $replacements[$original] = $sanitize ? filter_xss($value) : $value;
           break;
 
         case 'language_default_value':
           $value = '';
-          if ($language->language == 'fr') {
+          if ($language_code == 'fr') {
             $value = 'fra';
           }
           else {
@@ -157,7 +149,7 @@ function wetkit_metatag_tokens($type, $tokens, array $data = array(), array $opt
     foreach ($tokens as $name => $original) {
       switch ($name) {
         case 'bilingual_prefix':
-          if ($language->language == 'fr') {
+          if ($language_code == 'fr') {
             $value = 'fra';
           }
           else {
@@ -167,7 +159,7 @@ function wetkit_metatag_tokens($type, $tokens, array $data = array(), array $opt
           break;
 
         case 'bilingual_date_issued':
-          if ($language->language == 'fr') {
+          if ($language_code == 'fr') {
             $value = format_date(time(), 'custom', 'Y-m-d');
           }
           else {
@@ -177,7 +169,7 @@ function wetkit_metatag_tokens($type, $tokens, array $data = array(), array $opt
           break;
 
         case 'bilingual_date_published':
-          if ($language->language == 'fr') {
+          if ($language_code == 'fr') {
             $value = format_date(time(), 'custom', 'Y-m-d');
           }
           else {
@@ -191,7 +183,7 @@ function wetkit_metatag_tokens($type, $tokens, array $data = array(), array $opt
 
           // If i18n variable exists then give it precedence.
           if (function_exists('i18n_variable_get')) {
-            $value = i18n_variable_get('wetkit_metatag_creator', $language->language);
+            $value = i18n_variable_get('wetkit_metatag_creator', $language_code);
           }
           else {
             $value = '';
@@ -211,7 +203,7 @@ function wetkit_metatag_tokens($type, $tokens, array $data = array(), array $opt
     foreach ($tokens as $name => $original) {
       switch ($name) {
         case 'bilingual_prefix':
-          if ($node->language == 'fr') {
+          if ($language_code == 'fr') {
             $value = 'fra';
           }
           else {
@@ -221,7 +213,7 @@ function wetkit_metatag_tokens($type, $tokens, array $data = array(), array $opt
           break;
 
         case 'bilingual_date_issued':
-          if ($node->language == 'fr') {
+          if ($language_code == 'fr') {
             $value = format_date($node->created, 'custom', 'Y-m-d');
           }
           else {
@@ -231,7 +223,7 @@ function wetkit_metatag_tokens($type, $tokens, array $data = array(), array $opt
           break;
 
         case 'bilingual_date_published':
-          if ($node->language == 'fr') {
+          if ($language_code == 'fr') {
             $value = format_date($node->changed, 'custom', 'Y-m-d');
           }
           else {
@@ -242,19 +234,14 @@ function wetkit_metatag_tokens($type, $tokens, array $data = array(), array $opt
 
         case 'improved_creator':
           $value = '';
-
           // If i18n variable exists then give it precedence.
           if (function_exists('i18n_variable_get')) {
-            $value = i18n_variable_get('wetkit_metatag_creator', $node->language);
+            $value = i18n_variable_get('wetkit_metatag_creator', $language_code);
           }
-
           // If there is no i18n variable present for creator then node author.
-          if ($value == '') {
-            if (isset($node->name)) {
-              $value = $node->name;
-            }
+          else {
+            $value = isset($node->name) ? $node->name : '';
           }
-
           $replacements[$original] = $sanitize ? filter_xss($value) : $value;
           break;
 
@@ -263,27 +250,9 @@ function wetkit_metatag_tokens($type, $tokens, array $data = array(), array $opt
           if (isset($items)) {
             $instance = field_info_instance('node', 'body', $node->type);
             $field_langcode = field_language('node', $node, 'body', $language_code);
-
-            // If the summary was requested and is not empty, use it.
-            if ($name == 'improved_summary' && !empty($items[0]['summary'])) {
-              $output = $sanitize ? _text_sanitize($instance, $field_langcode, $items[0], 'summary') : $items[0]['summary'];
-            }
-            // Attempt to provide a suitable version of the 'body' field.
-            else {
-              $output = $sanitize ? _text_sanitize($instance, $field_langcode, $items[0], 'value') : $items[0]['value'];
-              // A summary was requested.
-              if ($name == 'improved_summary') {
-                $pos = strpos($output, ".");
-                // Cap off at 150 characters.
-                if ($pos >= 250) {
-                  $pos = 250;
-                }
-                $trim_length = $pos;
-                // Generate an optionally trimmed summary of the body field.
-                $output = text_summary($output, $instance['settings']['text_processing'] ? $items[0]['format'] : NULL, $trim_length) . '...';
-              }
-            }
-            $replacements[$original] = $output;
+            $output = $sanitize ? _text_sanitize($instance, $field_langcode, $items[0], 'value') : $items[0]['value'];
+            // Generate an optionally trimmed summary of the body field.
+            $replacements[$original] = text_summary($output, $instance['settings']['text_processing'] ? $items[0]['format'] : NULL) . '...';
           }
           break;
 
