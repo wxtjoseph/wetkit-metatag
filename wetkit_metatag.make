@@ -11,4 +11,4 @@ projects[metatag][type] = module
 projects[metatag][download][type] = git
 projects[metatag][download][revision] = 8a05eec
 projects[metatag][download][branch] = 7.x-1.x
-projects[metatag][patch][1572474] = http://drupal.org/files/issues/metatag-n1572474-78.patch
+projects[metatag][patch][214299] = http://drupal.org/files/issues/metatag_entity_translation-214299-05.patch
