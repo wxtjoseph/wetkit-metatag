@@ -108,12 +108,6 @@ function wetkit_metatag_theme() {
   return $info;
 }
 
-/**
- * Unset metatags in the header that are no longer needed in HTML5.
- */
-function wetkit_metatag_html_head_alter(&$head_elements) {
-  unset($head_elements['metatag_description']);
-}
 
 /**
  * Theme callback for a Dublin Core meta tag.
