@@ -136,6 +136,30 @@ function wetkit_metatag_form_alter(&$form, &$form_state, $form_id) {
       unset($form['metatags']['dublin-core']['#description']);
     }
   }
+
+  // Check if Metatag Panels module exists.
+  if (module_exists('metatag_panels')) {
+    // Create the General Settings Fieldset.
+    if ($form_id == 'metatag_panels_node_form_metatags_content_type_edit_form') {
+      // Create General Settings Fieldset.
+      $form['general_settings'] = array(
+        '#type' => 'fieldset',
+        '#title' => t('General Settings'),
+        '#collapsible' => FALSE,
+        '#collapsed' => FALSE,
+      );
+      $form['general_settings']['override_title'] = $form['override_title'];
+      $form['general_settings']['override_title_markup'] = $form['override_title_markup'];
+      $form['general_settings']['override_title_text'] = $form['override_title_text'];
+      $form['general_settings']['context'] = $form['context'];
+
+      // Unset some Form Variables.
+      unset($form['override_title']);
+      unset($form['override_title_markup']);
+      unset($form['override_title_text']);
+      unset($form['context']);
+    }
+  }
 }
 
 /**
