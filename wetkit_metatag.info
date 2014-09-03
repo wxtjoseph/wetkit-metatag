@@ -1,5 +1,5 @@
 name = WetKit Metatag
-description = Installs and configures default metatags for Drupal WxT.
+description = Installs and configures default metatags that help to extend the SEO of the site.
 core = 7.x
 package = WetKit
 dependencies[] = ctools

@@ -89,6 +89,7 @@ function wetkit_metatag_token_info() {
  *   strings from the original text.
  */
 function wetkit_metatag_tokens($type, $tokens, array $data = array(), array $options = array()) {
+  global $language;
 
   $url_options = array('absolute' => TRUE);
   if (isset($options['language'])) {
@@ -96,7 +97,7 @@ function wetkit_metatag_tokens($type, $tokens, array $data = array(), array $opt
     $language_code = $options['language']->language;
   }
   else {
-    $language_code = NULL;
+    $language_code = $language->language;
   }
   $sanitize = !empty($options['sanitize']);
 
