@@ -5,6 +5,6 @@ core = 7.x
 
 ; Modules for WetKit Metatag
 
-projects[metatag][version] = 1.4
+projects[metatag][version] = 1.7
 projects[metatag][subdir] = contrib
-projects[metatag][patch][1986032] = http://drupal.org/files/issues/metatag-panels-views-context-i18n-1986032_36.patch
+projects[metatag][patch][1986032] = http://drupal.org/files/issues/twitter-n1986032-68.patch
