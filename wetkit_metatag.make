@@ -3,7 +3,7 @@
 api = 2
 core = 7.x
 
-; Modules for WetKit Metatag
+; Module(s) for WetKit Metatag
 
 projects[metatag][version] = 1.10
 projects[metatag][subdir] = contrib
