@@ -112,7 +112,7 @@ function wetkit_metatag_tokens($type, $tokens, array $data = array(), array $opt
         case 'bilingual_default_value':
           $value = '';
           if ($language_code == 'fr') {
-            $value = 'null';
+            $value = 'nul';
           }
           else {
             $value = 'none';
