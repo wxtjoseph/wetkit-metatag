@@ -104,6 +104,9 @@ function wetkit_metatag_theme() {
   $info['wetkit_metatag'] = array(
     'render element' => 'element',
   );
+  $info['wetkit_metatag_property'] = array(
+    'render element' => 'element',
+  );
 
   return $info;
 }
@@ -116,6 +119,20 @@ function theme_wetkit_metatag($variables) {
   $element = &$variables['element'];
   element_set_attributes($element, array(
     '#name' => 'name',
+    '#schema' => 'title',
+    '#value' => 'content')
+  );
+  unset($element['#value']);
+  return theme('html_tag', $variables);
+}
+
+/**
+ * Theme callback for a Property metatag.
+ */
+function theme_wetkit_metatag_property($variables) {
+  $element = &$variables['element'];
+  element_set_attributes($element, array(
+    '#name' => 'property',
     '#schema' => 'title',
     '#value' => 'content')
   );

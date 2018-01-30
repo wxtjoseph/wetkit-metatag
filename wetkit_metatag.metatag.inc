@@ -16,12 +16,24 @@ function wetkit_metatag_metatag_config_default_alter(array &$configs) {
           'dcterms.language' => array('value' => '[current-page:language_default_value]'),
           'dcterms.subject' => array('value' => '[current-page:bilingual_default_value]'),
           'dcterms.title' => array('value' => '[current-page:title]'),
+          'dcterms:service' => array('value' => NULL),
+          'dcterms:accessRights' => array('value' => '2'),
         );
         break;
 
       case 'global:frontpage':
         $config->config += array(
+          'dcterms:service' => array('value' => NULL),
+          'dcterms:accessRights' => array('value' => '2'),
           'dcterms.title' => array('value' => '[site:name]'),
+        );
+        break;
+
+      case 'frontpage':
+        $config->config += array(
+          'dcterms.title' => array('value' => '[site:name]'),
+          'dcterms:service' => array('value' => NULL),
+          'dcterms:accessRights' => array('value' => '2'),
         );
         break;
 
@@ -34,7 +46,16 @@ function wetkit_metatag_metatag_config_default_alter(array &$configs) {
           'dcterms.creator' => array('value' => '[node:improved_creator]'),
           'dcterms.description' => array('value' => '[node:improved_summary]'),
           'metatags.description' => array('value' => '[node:improved_summary]'),
+          'dcterms:service' => array('value' => NULL),
+          'dcterms:accessRights' => array('value' => '2'),
         );
+        break;
+
+      case 'panels':
+        $config->config += array(
+          'dcterms:service' => array('value' => NULL),
+          'dcterms:accessRights' => array('value' => '2'),
+          );
         break;
 
       case 'taxonomy_term':
@@ -143,6 +164,24 @@ function wetkit_metatag_metatag_info() {
     'element' => array(
       '#theme' => 'wetkit_metatag',
       '#schema' => 'ISO639-2',
+    ),
+  );
+  $info['tags']['dcterms:accessRights'] = array(
+    'label' => t('Dublin Core Access Rights'),
+    'description' => t('Information about this element can be found at: <a href="http://purl.org/dc/terms/accessRights">http://purl.org/dc/terms/accessRights</a>'),
+    'class' => 'DrupalTextMetaTag',
+    'group' => 'dublin-core',
+    'element' => array(
+      '#theme' => 'wetkit_metatag_property',
+     ),
+  );
+  $info['tags']['dcterms:service'] = array(
+    'label' => t('Dublin Core Service'),
+    'description' => t('Information about this element can be found at: <a href="http://purl.org/dc/dcmitype/Service">http://purl.org/dc/dcmitype/Service</a>'),
+    'class' => 'DrupalTextMetaTag',
+    'group' => 'dublin-core',
+    'element' => array(
+      '#theme' => 'wetkit_metatag_property',
     ),
   );
 
