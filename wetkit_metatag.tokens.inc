@@ -251,6 +251,8 @@ function wetkit_metatag_tokens($type, $tokens, array $data = array(), array $opt
           if (isset($items)) {
             $instance = field_info_instance('node', 'body', $node->type);
             $field_langcode = field_language('node', $node, 'body', $language_code);
+            $items[0] = isset($items[0]) ? $items[0] : null;
+            $items[0]['value'] = isset($items[0]['value']) ? $items[0]['value'] : null;
             $output = $sanitize ? _text_sanitize($instance, $field_langcode, $items[0], 'value') : $items[0]['value'];
             // Generate an optionally trimmed summary of the body field.
             $replacements[$original] = text_summary($output, $instance['settings']['text_processing'] ? $items[0]['format'] : NULL) . '...';
